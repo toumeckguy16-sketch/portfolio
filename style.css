@@ -1,14 +1,23 @@
 :root {
-    --header-green: #4b8e7d;
-    --hero-mint: #e8f8f3;
-    --accent-coral: #ef835f;
-    --text-dark: #2d3e39;
-    --text-muted: #5a7a72;
-    --text-white: #ffffff;
-    --font-heading: 'Playfair Display', serif;
-    --font-alt: 'Lora', serif;
-    --font-body: 'Montserrat', sans-serif;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Variables pour le thème (Sombre/Clair) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #fafafa;
+    --bg-card: #ffffff;
+    --text-main: var(--text-dark);
+    --text-muted-color: var(--text-muted);
+    --title-color: var(--header-green);
+}
+
+.dark-theme {
+    --bg-primary: #0f1110;
+    --bg-secondary: #0f1110;
+    --bg-card: #1a1c1b;
+    /* Légèrement plus clair pour les cartes pour garder du relief */
+    --text-main: #ffffff;
+    --text-muted-color: #a0a0a0;
+    --header-green: #0f1110;
+    --hero-mint: #0f1110;
+    --title-color: var(--accent-coral);
 }
 
 * {
@@ -22,11 +31,12 @@ html {
 }
 
 body {
-    background-color: #ffffff;
-    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* --- Scrollbar --- */
@@ -60,6 +70,7 @@ nav {
     background: var(--header-green);
     color: white;
     height: 80px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {
@@ -149,7 +160,7 @@ nav {
 .hero-description {
     font-family: var(--font-alt);
     font-size: 1.4rem;
-    color: var(--text-dark);
+    color: var(--text-main);
     margin-bottom: 3rem;
 }
 
@@ -158,7 +169,7 @@ nav {
 }
 
 .hero-description a {
-    color: var(--text-dark);
+    color: var(--text-main);
     text-decoration: none;
     border-bottom: 1px solid var(--accent-coral);
     padding-bottom: 1px;
@@ -192,7 +203,7 @@ nav {
 .section-title {
     font-size: 3rem;
     font-family: var(--font-heading);
-    color: var(--header-green);
+    color: var(--title-color);
     margin-bottom: 4rem;
     text-align: center;
     position: relative;
@@ -201,7 +212,7 @@ nav {
 /* --- About Section --- */
 .about {
     padding: 100px 10%;
-    background-color: #fff;
+    background-color: var(--bg-primary);
 }
 
 .about-container {
@@ -212,12 +223,14 @@ nav {
 
 .about-text {
     flex: 1;
+    color: var(--text-main);
 }
 
 .about-text p {
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
-    color: var(--text-muted);
+    color: var(--text-main);
+    /* Forcé au blanc/main */
 }
 
 .info-grid {
@@ -237,7 +250,7 @@ nav {
 
 .info-item .value {
     font-size: 1rem;
-    color: var(--text-dark);
+    color: var(--text-main);
     font-weight: 600;
 }
 
@@ -259,7 +272,7 @@ nav {
 /* --- Skills Section --- */
 .skills {
     padding: 100px 10%;
-    background-color: #fafafa;
+    background-color: var(--bg-secondary);
 }
 
 .skills-grid {
@@ -269,12 +282,13 @@ nav {
 }
 
 .skill-card {
-    background: white;
+    background: var(--bg-card);
     padding: 3rem 2rem;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: var(--transition);
+    color: var(--text-main);
 }
 
 .skill-card:hover {
@@ -291,12 +305,12 @@ nav {
 .skill-card h3 {
     margin-bottom: 1.5rem;
     font-family: var(--font-heading);
-    color: var(--text-dark);
+    color: var(--text-main);
 }
 
 .skill-card ul {
     list-style: none;
-    color: var(--text-muted);
+    color: var(--text-muted-color);
 }
 
 .skill-card ul li {
@@ -316,11 +330,12 @@ nav {
 }
 
 .project-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     transition: var(--transition);
+    color: var(--text-main);
 }
 
 .project-card:hover {
@@ -339,11 +354,11 @@ nav {
 .project-info h3 {
     margin-bottom: 1rem;
     font-family: var(--font-heading);
-    color: var(--text-dark);
+    color: var(--text-main);
 }
 
 .project-info p {
-    color: var(--text-muted);
+    color: var(--text-muted-color);
     margin-bottom: 1.5rem;
 }
 
@@ -361,6 +376,21 @@ nav {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: var(--accent-coral);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.project-link:hover {
+    color: var(--header-green);
+    transform: translateX(5px);
 }
 
 /* --- Contact Section --- */
@@ -382,11 +412,11 @@ nav {
 
 #contact-form input,
 #contact-form textarea {
-    background: white;
+    background: var(--bg-card);
     border: 2px solid transparent;
     padding: 1.2rem;
     border-radius: 10px;
-    color: var(--text-dark);
+    color: var(--text-main);
     font-family: var(--font-body);
     outline: none;
     transition: var(--transition);
