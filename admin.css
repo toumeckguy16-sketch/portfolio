@@ -65,7 +65,7 @@ body {
 }
 
 .admin-nav .logo {
-    color: var(--admin-accent);
+    color: #0f1110;
     font-weight: 800;
     font-size: 1.5rem;
 }
@@ -102,14 +102,20 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    opacity: 0.7;
+    opacity: 0.8;
+    color: white;
+}
+
+.admin-sidebar li i {
+    color: white;
 }
 
 .admin-sidebar li:hover,
 .admin-sidebar li.active {
     background: rgba(255, 255, 255, 0.1);
     opacity: 1;
-    border-left: 4px solid var(--admin-accent);
+    border-left: 4px solid #ef835f;
+    color: white;
 }
 
 /* Content Area */
