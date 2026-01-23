@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Toumeck Guy Aimé</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <div id="auth-container" class="auth-section">
+        <div class="login-card">
+            <h2>Admin Login</h2>
+            <p>Access your portfolio management system</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div id="login-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="dashboard-container" style="display: none;">
+        <nav class="admin-nav">
+            <div class="logo">Admin Panel</div>
+            <div class="nav-actions">
+                <span id="user-email"></span>
+                <button id="logout-btn" class="btn-outline">Logout</button>
+            </div>
+        </nav>
+
+        <main class="admin-main">
+            <aside class="admin-sidebar">
+                <ul>
+                    <li class="active" data-section="settings"><i class="fas fa-cog"></i> Site Settings</li>
+                    <li data-section="projects"><i class="fas fa-project-diagram"></i> Projects</li>
+                    <li data-section="messages"><i class="fas fa-envelope"></i> Messages</li>
+                    <li data-section="access"><i class="fas fa-user-lock"></i> Access Control</li>
+                </ul>
+            </aside>
+
+            <section class="admin-content">
+                <!-- Site Settings Section -->
+                <div id="settings-section" class="content-section active">
+                    <h2>Site Settings</h2>
+                    <form id="settings-form" class="admin-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Hero Title</label>
+                                <input type="text" name="hero_title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Description (HTML allowed)</label>
+                            <textarea name="hero_description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>About Text (HTML allowed)</label>
+                            <textarea name="about_text" rows="5"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Profile Image URL</label>
+                                <div class="image-input-container">
+                                    <input type="text" name="profile_image_url" id="profile-url-input">
+                                    <input type="file" id="profile-upload" style="display: none;" accept="image/*">
+                                    <button type="button" class="btn-sm btn-outline"
+                                        onclick="document.getElementById('profile-upload').click()">Upload
+                                        Image</button>
+                                </div>
+                                <div class="admin-profile-preview">
+                                    <img id="profile-preview" src="assets/imageMe.jpg" alt="Preview">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Primary Color</label>
+                                <input type="color" name="primary_color">
+                            </div>
+                            <div class="form-group">
+                                <label>Accent Color</label>
+                                <input type="color" name="accent_color">
+                            </div>
+                            <div class="form-group">
+                                <label>Hero BG Color</label>
+                                <input type="color" name="hero_bg_color">
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" name="is_dark_mode" id="dark-mode">
+                                <label for="dark-mode">Dark Mode</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>LinkedIn URL</label>
+                                <input type="text" name="linkedin_url">
+                            </div>
+                            <div class="form-group">
+                                <label>GitHub URL</label>
+                                <input type="text" name="github_url">
+                            </div>
+                            <div class="form-group">
+                                <label>Twitter URL</label>
+                                <input type="text" name="twitter_url">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Projects Section -->
+                <div id="projects-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Manage Projects</h2>
+                        <button id="add-project-btn" class="btn">Add New Project</button>
+                    </div>
+                    <div id="projects-list" class="admin-grid">
+                        <!-- Projects will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Messages Section -->
+                <div id="messages-section" class="content-section">
+                    <h2>Inquiries</h2>
+                    <div id="messages-list" class="messages-container">
+                        <!-- Messages will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Access Section -->
+                <div id="access-section" class="content-section">
+                    <h2>Access Control</h2>
+                    <p class="section-desc">Manage who can log into this administration panel.</p>
+                    <div class="admin-form">
+                        <form id="add-access-form" class="form-row" style="align-items: flex-end;">
+                            <div class="form-group">
+                                <label>Authorized Email</label>
+                                <input type="email" id="new-access-email" placeholder="colleague@example.com" required>
+                            </div>
+                            <button type="submit" class="btn" style="margin-bottom: 1.5rem;">Authorize User</button>
+                        </form>
+                        <div class="access-list-container">
+                            <h3>Authorized Users</h3>
+                            <ul id="access-list" class="access-emails-list">
+                                <!-- List populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">Add Project</h2>
+            <form id="project-form" class="admin-form">
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label>Project Title</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" name="image_url">
+                    </div>
+                    <div class="form-group">
+                        <label>Project Link</label>
+                        <input type="text" name="link">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" name="tags" placeholder="Python, ML, React">
+                </div>
+                <button type="submit" class="btn">Save Project</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
